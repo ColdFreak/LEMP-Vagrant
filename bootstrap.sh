@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Exit if already bootstrapped
-# test -f /etc/bootstrapped && exit
+test -f /etc/bootstrapped && exit
 
 # Exit immediately if a command exits with a non-zero status.
 set -e
@@ -93,4 +93,4 @@ show sudo service nginx restart
 show sudo service mysqld restart
 show sudo service php-fpm start
 
-# show sudo bash -c "date > /etc/bootstrapped"
+show sudo bash -c "date > /etc/bootstrapped"
