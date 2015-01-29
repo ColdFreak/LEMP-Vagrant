@@ -19,6 +19,12 @@ chmod -v 0755 /home/vagrant/.bashrc
 
 # why use hash to check the existence of a program
 # http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
+
+# '2>&-' ("close output file descriptor 2", which is stderr) 
+# has the same result as '2> /dev/null'; 
+
+# '>&2' is a shortcut for 1>&2, 
+# which you may recognize as "redirect stdout to stderr".
 if hash wget 2>/dev/null; then
     show yum install wget -y
 fi
