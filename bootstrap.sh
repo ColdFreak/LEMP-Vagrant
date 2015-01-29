@@ -17,7 +17,9 @@ chown -v vagrant:vagrant /home/vagrant/.bashrc
 chmod -v 0755 /home/vagrant/.bashrc
 
 
-if [ "$(which wget)" != "/usr/bin/wget" ]; then
+# why use hash to check the existence of a program
+# http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
+if hash wget 2>/dev/null; then
     show yum install wget -y
 fi
 
@@ -32,19 +34,19 @@ if [ "$(rpm -qa | grep mysql-community-release-el6-5)" != "mysql-community-relea
 fi
 
 
-if [ "$(which vim)" != "/usr/bin/vim" ]; then
+if hash vim 2>/dev/null; then
     show yum install  vim-enhanced -y
 fi
 
-if [ "$(which mlocate)" != "/usr/bin/locate" ]; then
+if hash mlocate 2>/dev/null; then
     show yum install mlocate -y
 fi
 
-if [ "$(which git)" != "/usr/bin/git" ]; then
+if hash git 2>/dev/null; then
     show yum install git -y
 fi
 
-if [ "$(which man)" != "/usr/bin/man" ]; then
+if hash man 2>/dev/null; then
    show yum install man -y
 fi
 
@@ -55,16 +57,16 @@ if [ "$(which nginx)" != "/usr/sbin/nginx" ]; then
    show cp /vagrant/conf.d/50x.html /vagrant/www/50x.html
 fi
 
-if [  "$(which mysqld)" != "/usr/sbin/mysqld" ]; then
+if hash mysqld 2>/dev/null; then
    show yum install  mysql-community-server -y
 fi
 
-if [ "$(which php)" != "/usr/bin/php" ]; then
+if hash php 2>/dev/null; then
    show yum install php55w -y
    show cp /vagrant/conf.d/php.ini /etc/php.ini
 fi
 
-if [ "$(which php-fpm)" != "/usr/sbin/php-fpm" ]; then
+if hash php-fpm 2>/dev/null; then
    show yum install php55w-fpm -y
    show cp /vagrant/conf.d/www.conf /etc/php-fpm.d/www.conf
 fi
