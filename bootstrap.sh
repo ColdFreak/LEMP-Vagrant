@@ -25,7 +25,7 @@ chmod -v 0755 /home/vagrant/.bashrc
 
 # '>&2' is a shortcut for 1>&2, 
 # which you may recognize as "redirect stdout to stderr".
-if hash wget 2>/dev/null; then
+if ! hash wget 2>/dev/null; then
     show yum install wget -y
 fi
 
@@ -40,39 +40,39 @@ if [ "$(rpm -qa | grep mysql-community-release-el6-5)" != "mysql-community-relea
 fi
 
 
-if hash vim 2>/dev/null; then
+if ! hash vim 2>/dev/null; then
     show yum install  vim-enhanced -y
 fi
 
-if hash mlocate 2>/dev/null; then
+if ! hash mlocate 2>/dev/null; then
     show yum install mlocate -y
 fi
 
-if hash git 2>/dev/null; then
+if ! hash git 2>/dev/null; then
     show yum install git -y
 fi
 
-if hash man 2>/dev/null; then
+if ! hash man 2>/dev/null; then
    show yum install man -y
 fi
 
-if [ "$(which nginx)" != "/usr/sbin/nginx" ]; then
+if ! hash nginx; then
    show yum install nginx16 -y
    show cp /vagrant/conf.d/nginx.conf /etc/nginx/nginx.conf
    show cp /vagrant/conf.d/404.html /vagrant/www/404.html
    show cp /vagrant/conf.d/50x.html /vagrant/www/50x.html
 fi
 
-if hash mysqld 2>/dev/null; then
+if ! hash mysqld 2>/dev/null; then
    show yum install  mysql-community-server -y
 fi
 
-if hash php 2>/dev/null; then
+if ! hash php 2>/dev/null; then
    show yum install php55w -y
    show cp /vagrant/conf.d/php.ini /etc/php.ini
 fi
 
-if hash php-fpm 2>/dev/null; then
+if ! hash php-fpm 2>/dev/null; then
    show yum install php55w-fpm -y
    show cp /vagrant/conf.d/www.conf /etc/php-fpm.d/www.conf
 fi
