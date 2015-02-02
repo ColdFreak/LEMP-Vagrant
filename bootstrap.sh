@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-# Exit if already bootstrapped
+# 既にbootstrapされていれば、スクリプトを終了
 test -f /etc/bootstrapped && exit
 
-# Exit immediately if a command exits with a non-zero status.
+# コマンドの戻り値０でない場合は即終了
 set -e
+
 function show() {
     echo "\$ $@"
     eval "$@"
@@ -25,6 +26,7 @@ chmod -v 0755 /home/vagrant/.bashrc
 
 # '>&2' is a shortcut for 1>&2, 
 # which you may recognize as "redirect stdout to stderr".
+# 'hash' built-inコマンドでプログラムがインストールされているかを判断
 if ! hash wget 2>/dev/null; then
     show yum install wget -y
 fi
@@ -56,6 +58,7 @@ if ! hash man 2>/dev/null; then
    show yum install man -y
 fi
 
+# nginxをインストールする後、既に用意した設定ファイルをコピー
 if ! hash nginx; then
    show yum install nginx16 -y
    show cp /vagrant/conf.d/nginx.conf /etc/nginx/nginx.conf
@@ -85,6 +88,7 @@ if [ ! -e "/etc/php.d/xdebug.ini" ]; then
    show yum install php55w-pecl-xdebug -y
    show cp /vagrant/conf.d/xdebug.ini /etc/php.d/xdebug.ini
 fi
+
 if [ ! -d "/vagrant/www" ]; then
    show mkdir /vagrant/www
 fi
@@ -93,4 +97,7 @@ show sudo service nginx restart
 show sudo service mysqld restart
 show sudo service php-fpm start
 
+# すべてのコマンドが成功して、次回bootstrapされないように
+# 日付けをファイルに書き込む、そして、'bootstrap.sh'の先頭
+# でこのファイルあるかどうか判断
 show sudo bash -c "date > /etc/bootstrapped"
