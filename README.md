@@ -16,4 +16,7 @@ Windowsプラットフォームで`vagrant up`コマンドで"仮想化支援機
 BIOSの設定が必要。下のリンクを参照してください
 http://futurismo.biz/archives/1647
 
+mysqlサーバーにtestdbを作成して，rootのパスワードを'rootpassword'に設定します．
+
+Vagrantfile中のguiオプションはtrueになっているので，`vagrant up`コマンドでGUIが立ち上がります.GUI必要ないときにfalseに変更すればいいです．
 
